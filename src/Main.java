@@ -17,5 +17,10 @@ public class Main {
 
         TextProcessor processor = new TextProcessor();
         Map<String, List<String>> cleanedData = processor.process(pagesContent);
+
+        for (String url : cleanedData.keySet()) {
+            System.out.println("Tokens for: " + url);
+            System.out.println(cleanedData.get(url));
+        }
     }
 }
