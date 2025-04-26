@@ -1,6 +1,7 @@
 import crawler.Crawler;
 import textProcessor.TextProcessor;
 import queryProcessor.QueryProcessor;
+import invertedIndex.InvertedIndex;
 
 import java.util.List;
 import java.util.Map;
@@ -25,6 +26,18 @@ public class Main {
             System.out.println("Tokens for: " + url);
             System.out.println(cleanedData.get(url));
         }
+        InvertedIndex invertedIndex = new InvertedIndex();
+        int docIdCounter = 1;
+
+        for (String url : cleanedData.keySet()) {
+            int docId = docIdCounter++;
+            List<String> tokens = cleanedData.get(url);
+
+            for (String token : tokens) {
+                invertedIndex.addToken(token, docId);
+            }
+        }
+        invertedIndex.printIndex();
 
 //        Scanner scanner = new Scanner(System.in);
 //        System.out.print("Search: ");
