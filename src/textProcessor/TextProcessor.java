@@ -9,7 +9,7 @@ public class TextProcessor {
             "the", "is", "at", "which", "on", "and", "a", "an", "to", "in", "it", "of", "for", "with", "as", "by", "was", "were", "be"
     );
 
-    public Map<String, List<String>> process(Map<String, String> inputTexts) {
+    public static Map<String, List<String>> process(Map<String, String> inputTexts) {
         Map<String, List<String>> processedTexts = new HashMap<>();
 
         for (Map.Entry<String, String> entry : inputTexts.entrySet()) {
