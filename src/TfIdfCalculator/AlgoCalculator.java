@@ -19,8 +19,8 @@ public class AlgoCalculator {
             return 0.0;
         }
         while (termPosting != null) { //keep until u find the desired doc
-            if (termPosting.docId == docID) {
-                return (1 + Math.log10(termPosting.dtf));
+            if (termPosting.getDocID() == docID) {
+                return (1 + Math.log10(termPosting.getDTF()));
             }
             termPosting = termPosting.next;
         }
@@ -66,14 +66,14 @@ public class AlgoCalculator {
     public void printTFIDFVector(){
         Map<Integer, Map<String, Double>> tfidfResults = calculateTFIDF_allDocuments();
         for (Integer docId : tfidfResults.keySet()) {
-            System.out.println("TF-IDF Values For Document " + docId+1 + ":");
+            System.out.println("TF-IDF Values For Document " + docId + ":");
             System.out.println("----------------------------------------------------------------------------------------------------");
             Map<String, Double> termTfIdf = tfidfResults.get(docId);
             for (Map.Entry<String, Double> entry : termTfIdf.entrySet()) {
                 System.out.println("Term: " + entry.getKey() + " - TF-IDF: " + entry.getValue());
             }
             System.out.println("----------------------------------------------------------------------------------------------------");
-            System.out.println("Document ID: " + docId+1 + " Done");
+            System.out.println("Document ID: " + docId + " Done");
         }
     }
 }
