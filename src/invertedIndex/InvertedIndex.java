@@ -44,6 +44,9 @@ public class InvertedIndex {
                 System.out.println();
             }
         }
+        public Map<String, Posting> getIndex() {
+            return index;
+        }
     }
 
 

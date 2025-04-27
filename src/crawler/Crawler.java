@@ -61,4 +61,7 @@ public class Crawler {
     public Map<String, String> getPageTexts() {
         return pageTexts;
     }
+    public int getNumOfDocuments(){
+        return visitedPages.size();
+    }
 }
