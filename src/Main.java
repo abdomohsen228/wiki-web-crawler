@@ -37,21 +37,17 @@ public class Main {
                 invertedIndex.addToken(token, docId);
             }
         }
-
-//        invertedIndex.printIndex();
-
-//        Scanner scanner = new Scanner(System.in);
-//        System.out.print("Search: ");
-//        String inputQuery = scanner.nextLine();
-//        QueryProcessor query = new QueryProcessor();
-//        Set<String> results = query.processQuery(inputQuery);
-//
-//        for(String result : results)
-//        {
-//            System.out.println(result+"\n");
-//        }
         AlgoCalculator tfidfCalculator = new AlgoCalculator(invertedIndex, crawler);
-        tfidfCalculator.printTFIDFVector();
+
+        //invertedIndex.printIndex();
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Search: ");
+        String inputQuery = scanner.nextLine();
+        QueryProcessor query = new QueryProcessor();
+        query.processQuery(inputQuery,invertedIndex);
+
+        //tfidfCalculator.printTFIDFVector();
 
     }
 }
