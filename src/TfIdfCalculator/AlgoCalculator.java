@@ -6,14 +6,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AlgoCalculator {
-    private InvertedIndex invertedIndex;
-    private Crawler crawler;
+    private static InvertedIndex invertedIndex;
+    private static Crawler crawler;
     public AlgoCalculator(InvertedIndex invertedIndex,Crawler crawler) {
         this.invertedIndex = invertedIndex;
         this.crawler = crawler;
     }
 
-    private double calculateTF(String term, int docID){
+    private static double calculateTF(String term, int docID){
         Posting termPosting = invertedIndex.getIndex().get(term);
         if (termPosting == null) {
             return 0.0;
@@ -27,7 +27,7 @@ public class AlgoCalculator {
         return 0.0;
     }
 
-    private double calculateIDF(String term){
+    private static double calculateIDF(String term){
         double totalNumOfDocuments = crawler.getNumOfDocuments();
         double numOfDocumentsContainTerm = 0.0 ;
         Posting termPosting = invertedIndex.getIndex().get(term);
@@ -41,17 +41,17 @@ public class AlgoCalculator {
         return (Math.log10(totalNumOfDocuments / numOfDocumentsContainTerm));
     }
 
-    public double calculateTFIDF(String term, int docID){
+    public static double calculateTFIDF(String term, int docID){
         double tf = calculateTF(term, docID);
         double idf = calculateIDF(term);
         return (Math.round((tf * idf) * 10000.0) / 10000.0);
     }
 
-    public Map<Integer, Map<String, Double>> calculateTFIDF_allDocuments(){
+    public static Map<Integer, Map<String, Double>> calculateTFIDF_allDocuments(){
         double totalNumOfDocuments = crawler.getNumOfDocuments();
         //    docID --> (term --> TFIDF value)
         Map<Integer, Map<String, Double>> tfidfVector = new HashMap<>();
-        for (int docID = 0; docID < totalNumOfDocuments; docID++) {
+        for (int docID = 1; docID <= totalNumOfDocuments; docID++) {
 
             Map<String, Double> tfidfVectorForDoc = new HashMap<>();
             for (String term : invertedIndex.getIndex().keySet()) {
