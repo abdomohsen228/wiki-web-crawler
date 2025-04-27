@@ -17,5 +17,6 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="jsoup-1.19.1" level="project" />
+    <orderEntry type="library" name="jsoup-1.19.2" level="project" />
   </component>
 </module>

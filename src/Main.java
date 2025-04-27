@@ -3,11 +3,9 @@ import crawler.Crawler;
 import textProcessor.TextProcessor;
 import queryProcessor.QueryProcessor;
 import invertedIndex.InvertedIndex;
+import similarityCalculato.CosineSimilarity;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 public class Main {
 
@@ -41,13 +39,22 @@ public class Main {
 
         //invertedIndex.printIndex();
 
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Search: ");
-        String inputQuery = scanner.nextLine();
-        QueryProcessor query = new QueryProcessor();
-        query.processQuery(inputQuery,invertedIndex);
+           Scanner scanner = new Scanner(System.in);
+            System.out.print("Search: ");
+            String inputQuery = scanner.nextLine();
+            QueryProcessor query = new QueryProcessor();
+           query.processQuery(inputQuery,invertedIndex);
 
-        //tfidfCalculator.printTFIDFVector();
+//        tfidfCalculator.printTFIDFVector();
+
+
+
+        //  Cosine Similarity
+//        Map<Integer, Map<String, Double>> allDocs = AlgoCalculator.calculateTFIDF_allDocuments();
+//        Map<String, Double> queryTfIdf = CosineSimilarity.calculateQueryTfIdf(query.Tokenize());
+//
+//        CosineSimilarity cosineSimilarity = new CosineSimilarity();
+//        cosineSimilarity.printCosineSimilarity(allDocs, queryTfIdf);
 
     }
 }
