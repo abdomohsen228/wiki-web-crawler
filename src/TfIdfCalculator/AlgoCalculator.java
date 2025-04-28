@@ -27,7 +27,7 @@ public class AlgoCalculator {
         return 0.0;
     }
 
-    private static double calculateIDF(String term){
+    public static double calculateIDF(String term){
         double totalNumOfDocuments = crawler.getNumOfDocuments();
         double numOfDocumentsContainTerm = 0.0 ;
         Posting termPosting = invertedIndex.getIndex().get(term);

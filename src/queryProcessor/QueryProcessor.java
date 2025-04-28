@@ -6,6 +6,8 @@ import textProcessor.TextProcessor;
 
 import TfIdfCalculator.AlgoCalculator;
 
+import similarityCalculato.CosineSimilarity;
+
 import invertedIndex.*;
 
 public class QueryProcessor {
@@ -16,7 +18,7 @@ public class QueryProcessor {
         map.merge(key, value, Double::sum);
     }
 
-    private List<String> Tokenize()   // normalizing the query
+    public List<String> Tokenize()   // normalizing the query
     {
         Map<String,String>inputText = new HashMap<>();
         inputText.put("query",query);
@@ -30,6 +32,14 @@ public class QueryProcessor {
 
         Set<String> queryResults = new HashSet<>();
         Map<Integer,Map<String,Double>> allDocs = AlgoCalculator.calculateTFIDF_allDocuments(); // (DocID,(term,IDF))
+
+
+        // use CosineSimilarity to calculate similarity between the query and the documents
+        CosineSimilarity cosineSimilarity = new CosineSimilarity();
+        // calculate tf-idf
+        Map<String, Double> queryTfIdf = cosineSimilarity.calculateQueryTfIdf(tokenizedQuery);
+        cosineSimilarity.printCosineSimilarity(allDocs, queryTfIdf);
+
         Map<Integer,Double>finalMap = new HashMap<>();
         for( String token : tokenizedQuery)
         {
