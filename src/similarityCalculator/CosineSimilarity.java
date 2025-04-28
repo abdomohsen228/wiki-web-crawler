@@ -1,4 +1,4 @@
-package similarityCalculato;
+package similarityCalculator;
 
 import TfIdfCalculator.AlgoCalculator;
 

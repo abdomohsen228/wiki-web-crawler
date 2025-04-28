@@ -28,7 +28,9 @@ public class TextProcessor {
                     stemmer.add(ch);
                 }
                 stemmer.stem();
-                cleaned.add(stemmer.toString());
+                String stemmed =  stemmer.toString();
+                if (stemmed.length() >2 ) cleaned.add(stemmed);
+                cleaned.add(stemmed);
             }
 
             processedTexts.put(url, cleaned);

@@ -1,60 +1,54 @@
-import TfIdfCalculator.AlgoCalculator;
 import crawler.Crawler;
-import textProcessor.TextProcessor;
-import queryProcessor.QueryProcessor;
 import invertedIndex.InvertedIndex;
-import similarityCalculato.CosineSimilarity;
+import textProcessor.TextProcessor;
+import TfIdfCalculator.AlgoCalculator;
+import queryProcessor.QueryProcessor;
 
 import java.util.*;
 
 public class Main {
-
     public static void main(String[] args) {
+        // crawl the web
+        System.out.println("start the crawler");
         Crawler crawler = new Crawler();
         crawler.buildCrawler();
-        List<String> result  =  crawler.getCrawledPages();
-//        System.out.println(result);
-        Map<String, String> pagesContent = crawler.getPageTexts();
-//        System.out.println(pagesContent);
+        List<String> pages = crawler.getCrawledPages();
+        Map<String, String> pageTexts = crawler.getPageTexts();
+        System.out.println(pages.size() + " page");
 
-        TextProcessor processor = new TextProcessor();
-        Map<String, List<String>> cleanedData = processor.process(pagesContent);
-//
-//        for (String url : cleanedData.keySet()) {
-//            System.out.println("Tokens for: " + url);
-//            System.out.println(cleanedData.get(url));
-//        }
+        // preprocess text and build inverted index
+        System.out.println("\nprocessing text and building inverted index");
         InvertedIndex invertedIndex = new InvertedIndex();
-        int docIdCounter = 1;
+        Map<String, List<String>> processedTexts = TextProcessor.process(pageTexts);
 
-        for (String url : cleanedData.keySet()) {
-            int docId = docIdCounter++;
-            List<String> tokens = cleanedData.get(url);
-
+        int docID = 0;
+        Map<Integer, String> docIdToUrl = new HashMap<>();
+        for (String url : pages) {
+            List<String> tokens = processedTexts.get(url);
+            if (tokens == null) continue;
             for (String token : tokens) {
-                invertedIndex.addToken(token, docId);
+                invertedIndex.addToken(token, docID);
             }
+            docIdToUrl.put(docID, url);
+            docID++;
         }
-        AlgoCalculator tfidfCalculator = new AlgoCalculator(invertedIndex, crawler);
 
-        //invertedIndex.printIndex();
+        // calculate TF-IDF scores
+        System.out.println("\nCalculating TF-IDF...");
+        AlgoCalculator algoCalculator = new AlgoCalculator(invertedIndex, crawler);
+//        algoCalculator.printTFIDFVector();
 
-           Scanner scanner = new Scanner(System.in);
-            System.out.print("Search: ");
-            String inputQuery = scanner.nextLine();
-            QueryProcessor query = new QueryProcessor();
-           query.processQuery(inputQuery,invertedIndex);
+        // print Inverted Index
+        System.out.println("\nInverted Index:");
+        invertedIndex.printIndex();
 
-//        tfidfCalculator.printTFIDFVector();
+        // andle user query
+        System.out.println("\nProcessing Query:");
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter your search query: ");
+        String query = scanner.nextLine();
 
-
-
-        //  Cosine Similarity
-//        Map<Integer, Map<String, Double>> allDocs = AlgoCalculator.calculateTFIDF_allDocuments();
-//        Map<String, Double> queryTfIdf = CosineSimilarity.calculateQueryTfIdf(query.Tokenize());
-//
-//        CosineSimilarity cosineSimilarity = new CosineSimilarity();
-//        cosineSimilarity.printCosineSimilarity(allDocs, queryTfIdf);
-
+        QueryProcessor queryProcessor = new QueryProcessor();
+        queryProcessor.processQuery(query, invertedIndex);
     }
 }
