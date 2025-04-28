@@ -36,7 +36,7 @@ public class Main {
         // calculate TF-IDF scores
         System.out.println("\nCalculating TF-IDF...");
         AlgoCalculator algoCalculator = new AlgoCalculator(invertedIndex, crawler);
-//        algoCalculator.printTFIDFVector();
+        algoCalculator.printTFIDFVector();
 
         // print Inverted Index
         System.out.println("\nInverted Index:");

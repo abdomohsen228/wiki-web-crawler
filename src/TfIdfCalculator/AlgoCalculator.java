@@ -44,7 +44,7 @@ public class AlgoCalculator {
     public static double calculateTFIDF(String term, int docID){
         double tf = calculateTF(term, docID);
         double idf = calculateIDF(term);
-        return (Math.round((tf * idf) * 10000.0) / 10000.0);
+        return (tf * idf);
     }
 
     public static Map<Integer, Map<String, Double>> calculateTFIDF_allDocuments(){
@@ -69,8 +69,12 @@ public class AlgoCalculator {
             System.out.println("TF-IDF Values For Document " + docId + ":");
             System.out.println("----------------------------------------------------------------------------------------------------");
             Map<String, Double> termTfIdf = tfidfResults.get(docId);
-            for (Map.Entry<String, Double> entry : termTfIdf.entrySet()) {
-                System.out.println("Term: " + entry.getKey() + " - TF-IDF: " + entry.getValue());
+
+            for (String term : termTfIdf.keySet()) {
+                double tfidf = termTfIdf.get(term);
+                double tf = calculateTF(term, docId);
+                double idf = calculateIDF(term);
+                System.out.printf("Term: %-15s TF: %.4f | IDF: %.4f | TF-IDF: %.4f %n", term, tf, idf, tfidf);
             }
             System.out.println("----------------------------------------------------------------------------------------------------");
             System.out.println("Document ID: " + docId + " Done");
