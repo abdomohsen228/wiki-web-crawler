@@ -4,7 +4,7 @@ import java.util.*;
 
 import textProcessor.TextProcessor;
 import TfIdfCalculator.AlgoCalculator;
-import similarityCalculator.CosineSimilarity;
+import similarityCalculator.*;
 import invertedIndex.*;
 
 public class QueryProcessor {
@@ -40,13 +40,15 @@ public class QueryProcessor {
         cosineSimilarity.printCosineSimilarity(allDocs, queryTfIdf);
 
         Map<Integer, Double> finalMap = new HashMap<>();
-
+        Set<String> usedWords = new HashSet<>();
         for (String token : tokenizedQuery) {
             // get postings from inverted index
             Posting posting = invertedIndex.getIndex().get(token);
             Posting cur = posting;
 
+
             while (cur != null) {
+                usedWords.add(token);
                 int docId = cur.getDocID();
                 Map<String, Double> docTfIdf = allDocs.get(docId);
 
@@ -64,12 +66,18 @@ public class QueryProcessor {
         List<Map.Entry<Integer, Double>> sortedList = new ArrayList<>(finalMap.entrySet());
         sortedList.sort((e1, e2) -> Double.compare(e2.getValue(), e1.getValue()));
 
-        printResults(sortedList);
+        printResults(usedWords);
     }
 
-    public void printResults(List<Map.Entry<Integer, Double>> results) {
-        for (Map.Entry<Integer, Double> entry : results) {
-            System.out.println("Doc" + entry.getKey());
+    public void printResults(Set<String> results) {
+        if (!results.isEmpty()) {
+            StringBuilder Words = new StringBuilder("The Matched Query words: ");
+
+            for (String entry : results) {
+                Words.append(entry).append(" ");
+            }
+
+            System.out.println(Words);
         }
     }
 

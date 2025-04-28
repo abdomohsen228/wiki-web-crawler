@@ -39,15 +39,14 @@ public class Main {
         algoCalculator.printTFIDFVector();
 
         // print Inverted Index
-        System.out.println("\nInverted Index:");
-        invertedIndex.printIndex();
+//        System.out.println("\nInverted Index:");
+//        invertedIndex.printIndex();
 
         // andle user query
-        System.out.println("\nProcessing Query:");
-        Scanner scanner = new Scanner(System.in);
         System.out.print("Enter your search query: ");
+        Scanner scanner = new Scanner(System.in);
         String query = scanner.nextLine();
-
+        System.out.println("\nProcessing Query:");
         QueryProcessor queryProcessor = new QueryProcessor();
         queryProcessor.processQuery(query, invertedIndex);
     }

@@ -6,7 +6,11 @@ import java.util.regex.Pattern;
 public class TextProcessor {
 
     private static final Set<String> stopWords = Set.of(
-            "the", "is", "at", "which", "on", "and", "a", "an", "to", "in", "it", "of", "for", "with", "as", "by", "was", "were", "be"
+            "the", "a", "an", "and", "or", "but", "is", "are", "was", "were", "in", "on",
+            "at", "for", "to", "with", "by", "of", "this", "that", "these", "those",
+            "he", "she", "it", "they", "we", "you", "i", "be", "been", "being",
+            "do", "does", "did", "has", "have", "had", "not", "no", "yes",
+            "where", "when", "why", "how", "what", "which", "who", "whom"
     );
 
     public static Map<String, List<String>> process(Map<String, String> inputTexts) {
