@@ -1,7 +1,7 @@
 package TfIdfCalculator;
 import crawler.Crawler;
 import invertedIndex.InvertedIndex;
-import invertedIndex.Posting;
+import sharedModels.PostingElement;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,7 +16,7 @@ public class AlgoCalculator {
 
     // calculate the Term Frequency "TF" of a term in a specific document
     private static double calculateTF(String term, int docID){
-        Posting termPosting = invertedIndex.getIndex().get(term);
+        PostingElement termPosting = invertedIndex.getIndex().get(term);
         if (termPosting == null) {
             return 0.0;
         }
@@ -34,7 +34,7 @@ public class AlgoCalculator {
     public static double calculateIDF(String term){
         double totalNumOfDocuments = crawler.getNumOfDocuments();
         double numOfDocumentsContainTerm = 0.0 ;
-        Posting termPosting = invertedIndex.getIndex().get(term);
+        PostingElement termPosting = invertedIndex.getIndex().get(term);
         if (termPosting == null) {
             return 0.0;
         }

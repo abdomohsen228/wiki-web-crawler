@@ -1,42 +1,44 @@
 package invertedIndex;
+import sharedModels.PostingElement;
+
 import java.util.HashMap;
 import java.util.Map;
 
 
 public class InvertedIndex {
 
-        private Map<String, Posting> index;
+        private final Map<String, PostingElement> invertedIndex;
 
         public InvertedIndex() {
-            index = new HashMap<>();
+            invertedIndex = new HashMap<>();
         }
 
         public void addToken(String token, int docId) {
-            if (!index.containsKey(token)) {
-                index.put(token, new Posting(docId));
+            if (!invertedIndex.containsKey(token)) {
+                invertedIndex.put(token, new PostingElement(docId));
             } else {
-                Posting head = index.get(token);
-                Posting current = head;
+                PostingElement currentWord = invertedIndex.get(token);
                 boolean found = false;
-                while (current != null) {
-                    if (current.docId == docId) {
-                        current.dtf++;
+                while (currentWord != null) {
+                    if (currentWord.docId == docId) {
+                        currentWord.dtf++;
                         found = true;
                         break;
                     }
-                    if (current.next == null) break;
-                    current = current.next;
+                    if (currentWord.next == null) break;
+                    currentWord = currentWord.next;
                 }
-                if (!found) {
-                    current.next = new Posting(docId);
+                if (!found && currentWord != null) {
+                    currentWord.next = new PostingElement(docId);
                 }
+
             }
         }
 
         public void printIndex() {
-            for (Map.Entry<String, Posting> entry : index.entrySet()) {
+            for (Map.Entry<String, PostingElement> entry : invertedIndex.entrySet()) {
                 System.out.print(entry.getKey() + " -> ");
-                Posting current = entry.getValue();
+                PostingElement current = entry.getValue();
                 while (current != null) {
                     System.out.print("(DocID: " + current.docId + ", Freq: " + current.dtf + ") ");
                     current = current.next;
@@ -44,8 +46,8 @@ public class InvertedIndex {
                 System.out.println();
             }
         }
-        public Map<String, Posting> getIndex() {
-            return index;
+        public Map<String, PostingElement> getIndex() {
+            return invertedIndex;
         }
     }
 
