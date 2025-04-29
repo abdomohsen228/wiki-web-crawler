@@ -19,11 +19,10 @@ public class Crawler {
             "https://en.wikipedia.org/wiki/List_of_pharaohs",
             "https://en.wikipedia.org/wiki/Pharaoh"
     );
+    private static  final String baseUrl = "https://en.wikipedia.org";
     private static final int maxPages = 10;
-
     public void buildCrawler() {
         fetchedPages.addAll(mainUrls);
-
         while (!fetchedPages.isEmpty() && visitedPages.size() < maxPages) {
             String url = fetchedPages.poll();
             if (visitedPages.contains(url)) continue;
@@ -40,16 +39,15 @@ public class Crawler {
                     String href = link.attr("href");
 
                     if (href.startsWith("/wiki/") && !href.contains(":")) {
-                        String baseUrl = "https://en.wikipedia.org";
+
                         String fullUrl = baseUrl + href;
                         if (!visitedPages.contains(fullUrl)) {
                             fetchedPages.add(fullUrl);
                         }
                     }
                 }
-
             } catch (IOException e) {
-                System.err.println("Failed to fetch: " + url);
+                System.err.println("afiled to fetch: " + url);
             }
         }
     }

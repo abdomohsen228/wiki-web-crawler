@@ -2,6 +2,7 @@ package queryProcessor;
 
 import java.util.*;
 
+import sharedModels.PostingElement;
 import textProcessor.TextProcessor;
 import TfIdfCalculator.AlgoCalculator;
 import similarityCalculator.*;
@@ -43,8 +44,8 @@ public class QueryProcessor {
         Set<String> usedWords = new HashSet<>();
         for (String token : tokenizedQuery) {
             // get postings from inverted index
-            Posting posting = invertedIndex.getIndex().get(token);
-            Posting cur = posting;
+            PostingElement posting = invertedIndex.getIndex().get(token);
+            PostingElement cur = posting;
 
 
             while (cur != null) {

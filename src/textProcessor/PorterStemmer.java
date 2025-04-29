@@ -36,15 +36,7 @@ public class PorterStemmer {
         return new String(b, 0, i_end);
     }
 
-    public int getResultLength() {
-        return i_end;
-    }
-
-    public char[] getResultBuffer() {
-        return b;
-    }
-
-    private final boolean cons(int i) {
+    private  boolean cons(int i) {
         switch (b[i]) {
             case 'a': case 'e': case 'i': case 'o': case 'u':
                 return false;
@@ -55,7 +47,7 @@ public class PorterStemmer {
         }
     }
 
-    private final int m() {
+    private  int m() {
         int n = 0;
         int i = 0;
         while (true) {
@@ -81,25 +73,25 @@ public class PorterStemmer {
         }
     }
 
-    private final boolean vowelInStem() {
+    private  boolean vowelInStem() {
         for (int i = 0; i <= j; i++) if (!cons(i)) return true;
         return false;
     }
 
-    private final boolean doublec(int j) {
+    private  boolean doublec(int j) {
         if (j < 1) return false;
         if (b[j] != b[j - 1]) return false;
         return cons(j);
     }
 
-    private final boolean cvc(int i) {
+    private  boolean cvc(int i) {
         if (i < 2 || !cons(i) || cons(i - 1) || !cons(i - 2)) return false;
         int ch = b[i];
         if (ch == 'w' || ch == 'x' || ch == 'y') return false;
         return true;
     }
 
-    private final boolean ends(String s) {
+    private  boolean ends(String s) {
         int l = s.length();
         int o = k - l + 1;
         if (o < 0) return false;
@@ -108,18 +100,14 @@ public class PorterStemmer {
         return true;
     }
 
-    private final void setTo(String s) {
+    private  void setTo(String s) {
         int l = s.length();
         int o = j + 1;
         for (int i = 0; i < l; i++) b[o + i] = s.charAt(i);
         k = j + l;
     }
 
-    private final void r(String s) {
-        if (m() > 0) setTo(s);
-    }
-
-    private final void step1() {
+    private  void step1() {
         if (b[k] == 's') {
             if (ends("sses")) k -= 2;
             else if (ends("ies")) setTo("i");
@@ -140,7 +128,7 @@ public class PorterStemmer {
         }
     }
 
-    private final void step2() {
+    private  void step2() {
         if (ends("y") && vowelInStem()) b[k] = 'i';
     }
 
